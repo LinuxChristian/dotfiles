@@ -17,6 +17,15 @@ function install_eOS_addon {
     sudo apt-get install elementary-tweaks
 }
 
+function install_emacsColorTheme {
+    VERSION=6.6.0
+    cd /tmp/
+    wget http://download.savannah.gnu.org/releases/color-theme/color-theme-$VERSION.tar.gz
+    tar zxvf color-theme-$VERSION.tar.gz
+    mkdir ~/dotfiles/emacs/site-lisp/
+    cp -r color-theme-$VERSION ~/dotfiles/emacs/site-lisp/color-theme
+}
+
 function install_git {
 	sudo apt-get install git
 }

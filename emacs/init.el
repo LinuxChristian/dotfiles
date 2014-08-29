@@ -1,14 +1,9 @@
-; -*- mode: Lisp;-*-
+;-*- mode: Lisp;-*-
 
-(let ((default-directory "~/.emacs.d/site-lisp/"))
-  (normal-top-level-add-to-load-path '("."))
-  (normal-top-level-add-subdirs-to-load-path))
 
-;; Interactively do things
-(require 'ido)
-
-;; Force load of .el to list
-(add-to-list 'auto-mode-alist '("\\.el\\'" . lisp-mode))
+;(let ((default-directory "~/.emacs.d/"))
+;  (normal-top-level-add-to-load-path '("."))
+;  (normal-top-level-add-subdirs-to-load-path))
 
 ;; Configure before loading org mode (package-initialize)  
 (package-initialize)
@@ -19,6 +14,23 @@
   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+
+;;; Required packages
+;;; everytime emacs starts, it will automatically check if those packages are
+;;; missing, it will install them automatically
+(when (not package-archive-contents)
+  (package-refresh-contents))
+(defvar files/packages
+  '(auctex org))
+(dolist (p files/packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+
+;; Interactively do things
+(require 'ido)
+
+;; Force load of .el to list
+(add-to-list 'auto-mode-alist '("\\.el\\'" . lisp-mode))
 
 ;; Org-mode code block delimiters 
 ;; Before loading org-mode
@@ -58,7 +70,7 @@
 
 
   ;; Setup latex export
-(require 'org-latex)
+(require 'ob-latex)
 (unless (boundp 'org-export-latex-classes)
   (setq org-export-latex-classes nil))
 (add-to-list 'org-export-latex-classes
@@ -87,15 +99,15 @@
 (add-hook 'python-mode-hook 'column-enforce-mode)
 
 ;; taskjuggler plugin
-(require 'ox-taskjuggler)
+;(require 'ox-taskjuggler)
 
 ;; fontify code in code blocks
 (setq org-src-fontify-natively t)
 
 ;; Emacs setup
-(let ((default-directory "~/ownCloud/.configs/.emacs/site-lisp/"))
-  (normal-top-level-add-to-load-path '("."))
-  (normal-top-level-add-subdirs-to-load-path))
+;(let ((default-directory "~/ownCloud/.configs/.emacs/site-lisp/"))
+;  (normal-top-level-add-to-load-path '("."))
+;  (normal-top-level-add-subdirs-to-load-path))
 
 ;; LaTeX
 (setq TeX-auto-save t)
@@ -110,7 +122,7 @@
 (setq TeX-PDF-mode t)
 
 ;; Load auctex
-(load "auctex.el" nil t t)
+;;(load "auctex.el" nil t t)
 ;;(load "preview-latex.el" nil t t)
 
 ;; Load RefTeX
@@ -120,19 +132,14 @@
 
 ;; Load Color Theme
 (require 'color-theme)
-(load-theme 'zenburn t)
-;;(color-theme-initialize)
-;;(color-theme-charcoal-black)
+;;(load-theme 'zenburn t)
+(color-theme-initialize)
+(color-theme-charcoal-black)
 
 
 ;; Load AUCTeX
 ;;setq reftex-default-bibliography (quote ("/home/christian/PhD/Library.bib")))
 ;;(setq reftex-bibpath-environment-variables '("/home/christian/PhD/Library.bib"))
-
-;; Load Zotexo (Zotero-minor-mode)
-;; Requies MozRelp installed
-(require 'zotexo)
-(add-hook 'TeX-mode-hook 'zotexo-minor-mode)
 
 ;; Autoload
 (autoload 'cc-mode "cc-mode" "C/C++ Mode." t)
@@ -148,17 +155,6 @@
 	 ("\\.m"  . matlab-mode)) 
        auto-mode-alist)
 )
-
-;; Moz-repl Integration
-(autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
-
-(add-hook 'javascript-mode-hook 'javascript-custom-setup)
-(defun javascript-custom-setup ()
-  (moz-minor-mode 1))
-
-;; matlab-mode
-(setq matlab-indent-function t)
-(setq matlab-shell-command "matlab")
 
 (setq org-todo-keywords
        '((sequence "TODO" "IN PROGRESS" "|" "DONE" "CANCELED")))
