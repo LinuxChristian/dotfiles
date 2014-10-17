@@ -70,7 +70,7 @@
 
 
   ;; Setup latex export
-(require 'ob-latex)
+(require 'org-latex)
 (unless (boundp 'org-export-latex-classes)
   (setq org-export-latex-classes nil))
 (add-to-list 'org-export-latex-classes
@@ -122,12 +122,11 @@
 (setq TeX-PDF-mode t)
 
 ;; Load auctex
-;;(load "auctex.el" nil t t)
+(load "auctex.el" nil t t)
 ;;(load "preview-latex.el" nil t t)
 
 ;; Load RefTeX
 (add-hook 'latex-mode-hook 'turn-on-reftex)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-auctex t)
 
 ;; Load Color Theme
@@ -164,12 +163,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(LaTeX-command "/usr/local/texlive/2014/bin/x86_64-linux/latex")
+ '(LaTeX-command "/usr/local/texlive/2014/bin/x86_64-linux/pdflatex")
+ '(LaTeX-command-style (quote (("" "%(latex) %S%(PDFout)"))))
+ '(TeX-PDF-mode t)
+ '(TeX-command-list (quote (("TeX" "%(PDF)%(tex) %`%S%(PDFout)%(mode)%' %t" TeX-run-TeX nil (plain-tex-mode texinfo-mode ams-tex-mode) :help "Run plain TeX") ("LaTeX" "%`%l%(mode)%' %t" TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX") ("Makeinfo" "makeinfo %t" TeX-run-compile nil (texinfo-mode) :help "Run Makeinfo with Info output") ("Makeinfo HTML" "makeinfo --html %t" TeX-run-compile nil (texinfo-mode) :help "Run Makeinfo with HTML output") ("AmSTeX" "%(PDF)amstex %`%S%(PDFout)%(mode)%' %t" TeX-run-TeX nil (ams-tex-mode) :help "Run AMSTeX") ("ConTeXt" "texexec --once --texutil %(execopts)%t" TeX-run-TeX nil (context-mode) :help "Run ConTeXt once") ("ConTeXt Full" "texexec %(execopts)%t" TeX-run-TeX nil (context-mode) :help "Run ConTeXt until completion") ("BibTeX" "/usr/local/texlive/2014/bin/x86_64-linux/bibtex %s" TeX-run-BibTeX nil t :help "Run BibTeX") ("Biber" "biber %s" TeX-run-Biber nil t :help "Run Biber") ("View" "%V" TeX-run-discard-or-function t t :help "Run Viewer") ("Print" "%p" TeX-run-command t t :help "Print the file") ("Queue" "%q" TeX-run-background nil t :help "View the printer queue" :visible TeX-queue-command) ("File" "%(o?)dvips %d -o %f " TeX-run-command t t :help "Generate PostScript file") ("Index" "makeindex %s" TeX-run-command nil t :help "Create index file") ("Check" "lacheck %s" TeX-run-compile nil (latex-mode) :help "Check LaTeX file for correctness") ("Spell" "(TeX-ispell-document \"\")" TeX-run-function nil t :help "Spell-check the document") ("Clean" "TeX-clean" TeX-run-function nil t :help "Delete generated intermediate files") ("Clean All" "(TeX-clean t)" TeX-run-function nil t :help "Delete generated intermediate and output files") ("Other" "" TeX-run-command t t :help "Run an arbitrary command"))))
+ '(TeX-shell "/bin/sh")
+ '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t)
+ '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "Evince") (output-dvi "xdvi") (output-pdf "Evince") (output-html "xdg-open"))))
  '(custom-safe-themes (quote ("75c9f0b0499ecdd0c856939a5de052742d85af81814e84faa666522c2bba7e85" "146d24de1bb61ddfa64062c29b5ff57065552a7c4019bee5d869e938782dfc2a" default)))
  '(epg-gpg-home-directory nil)
- '(exec-path (quote ("/usr/lib/lightdm/lightdm" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/Anaconda/2.0.1/bin/")))
- '(latex-run-command "/usr/local/texlive/2014/bin/x86_64-linux/latex")
- '(org-agenda-files (quote ("~/PhD/Org/Artikle4.org" "~/Documents/org/Server-notes.org" "~/PhD/Org/Home.org" "~/PhD/Org/Teaching.org" "~/PhD/Org/Article2.org" "~/PhD/Org/Article3.org" "~/PhD/Org/TODO.org" "~/PhD/Org/Notes.org")))
+ '(exec-path (quote ("/usr/lib/lightdm/lightdm" "/usr/local/sbin" "/usr/local/bin" "/usr/local/texlive/2014/bin/x86_64-linux/" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/Anaconda/2.0.1/bin/")))
+ '(latex-run-command "latex")
+ '(org-agenda-files (quote ("~/PhD/Publications/Draft/Higher-order-stress/Article.org" (\, "~/PhD/Org/Artikle4.org") "~/Documents/org/Server-notes.org" "~/PhD/Org/Home.org" "~/PhD/Org/Teaching.org" "~/PhD/Org/Article2.org" "~/PhD/Org/Article3.org" "~/PhD/Org/TODO.org" "~/PhD/Org/Notes.org")))
  '(org-babel-python-command "/usr/local/Anaconda/2.0.1/bin/python")
  '(org-babel-python-mode (quote /usr/local/Anaconda/2\.0\.1/bin/ipython))
  '(org-modules (quote (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m)))
