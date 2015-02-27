@@ -70,13 +70,13 @@
 
 
   ;; Setup latex export
-(require 'org-latex)
-(unless (boundp 'org-export-latex-classes)
-  (setq org-export-latex-classes nil))
-(add-to-list 'org-export-latex-classes
-             '("article"
-               "\\documentclass{article}"
-               ("\\section{%s}" . "\\section*{%s}")))
+;;(require 'org-latex)
+;;(unless (boundp 'org-export-latex-classes)
+;;  (setq org-export-latex-classes nil))
+;;(add-to-list 'org-export-latex-classes
+;;             '("article"
+;;               "\\documentclass{article}"
+;;               ("\\section{%s}" . "\\section*{%s}")))
 
 ;; Activate agenda key
 (define-key global-map "\C-ca" 'org-agenda)

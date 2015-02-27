@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PROGRAMLIST="mu mbsync zsh gpg-agent ruby tj3 urxvt emacs unison git openconnect"
+#PROGRAMLIST="mu mbsync zsh gpg-agent ruby tj3 urxvt emacs unison git openconnect"
+PROGRAMLIST="mu zsh gpg-agent emacs unison git openconnect"
 HOMEDIR="/home/christian"
 CONFIGDIR="$HOMEDIR/ownCloud/.configs"
 
@@ -25,6 +26,23 @@ function install_emacsColorTheme {
     mkdir ~/dotfiles/emacs/site-lisp/
     cp -r color-theme-$VERSION ~/dotfiles/emacs/site-lisp/color-theme
 }
+
+function install_conda {
+    CONDAVERSION=3.8.3
+    CONDAPATH=/usr/local/conda
+    cd /tmp
+    if [ ! -f Miniconda-$CONDAVERSION-Linux-x86_64.sh ]; then
+	wget http://repo.continuum.io/miniconda/Miniconda-$CONDAVERSION-Linux-x86_64.sh
+    fi
+    if [ ! -d $CONDAPATH ]; then
+	sudo mkdir $CONDAPATH
+	sudo chown christian:christian $CONDAPATH
+    fi
+
+    chmod +x Miniconda-$CONDAVERSION-Linux-x86_64.sh
+    ./Miniconda-$CONDAVERSION-Linux-x86_64.sh -b -p $CONDAPATH/$CONDAVERSION
+
+    }
 
 function install_git {
 	sudo apt-get install git
@@ -83,7 +101,7 @@ function install_urxvt {
 }
 
 function install_emacs {
-	EMACS_VERSION=emacs-24.3
+	EMACS_VERSION=emacs-24.4
 	cd /tmp
 	# Install devel files to build emacs
 	sudo apt-get install xorg-dev libjpeg-dev libtiff4-dev libpng12-dev libgif-dev libxpm-dev libtinfo-dev libncurses5-dev libgnutls-dev imagemagick libgconf2-dev
@@ -97,6 +115,9 @@ function install_emacs {
 }
 
 function install_latex {
+    if [ 1 ]; then
+    sudo apt-get install texlive-base texlive-fonts-extra texlive-fonts-recommended texlive-lang-danish texlive-latex3 texlive-latex-recommended texlive-science texlive-pictures
+    else 
     TL_VERSION=20140813
     cd /tmp
     wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
@@ -104,6 +125,7 @@ function install_latex {
     sudo chown -R christian:christian /usr/local/texlive
     cd install-tl-$TL_VERSION
     ./install-tl -repository http://mirrors.dotsrc.org/ctan/systems/texlive/tlnet/
+    fi
 }
 
 function install_anaconda {
