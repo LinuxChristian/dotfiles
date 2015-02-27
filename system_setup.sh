@@ -1,15 +1,16 @@
 #!/bin/bash
 
 #PROGRAMLIST="mu mbsync zsh gpg-agent ruby tj3 urxvt emacs unison git openconnect"
-PROGRAMLIST="mu zsh gpg-agent emacs unison git openconnect"
+PROGRAMLIST="mu zsh gpg-agent emacs unison git openconnect sshfs redshift"
 HOMEDIR="/home/christian"
-CONFIGDIR="$HOMEDIR/ownCloud/.configs"
+CONFIGDIR="$HOMEDIR/dotfiles"
 
 function symlinks {
     echo "Creating symlinks"
-#    ln -fs $CONFIGDIR/.offlineimap $HOMEDIR/.offlineimaprc
-    ln -fs $CONFIGDIR/Maildir/ $HOMEDIR/.emails
     ln -fs $CONFIGDIR/.zshrc $HOMEDIR/.zshrc
+    ln -fs $CONFIGDIR/.bashrc $HOMEDIR/.bashrc
+    ln -fs $CONFIGDIR/.ssh $HOMEDIR/.ssh
+    ln -fs $CONFIGDIR/.emacs.d $HOMEDIR/.emacs
 }
 
 function install_eOS_addon {
@@ -41,7 +42,8 @@ function install_conda {
 
     chmod +x Miniconda-$CONDAVERSION-Linux-x86_64.sh
     ./Miniconda-$CONDAVERSION-Linux-x86_64.sh -b -p $CONDAPATH/$CONDAVERSION
-
+    cd  $CONDAPATH/$CONDAVERSION/bin
+    ./pip install pip matplotlib numpy scipy pandas
     }
 
 function install_git {
@@ -205,7 +207,6 @@ function install_mbsync {
 for prog in $PROGRAMLIST; do
 
     if [ "$1" == "" ]; then
-    # Check if mu is installed
     if [ -z "`which $prog`" ]; then
 	while true; do
 	    echo "$prog is not installed"
@@ -226,6 +227,6 @@ for prog in $PROGRAMLIST; do
 done
 
 
-symlinks
+#symlinks
 
 echo "System is up-to-date"
