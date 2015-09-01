@@ -11,7 +11,31 @@ function symlinks {
     ln -fs $CONFIGDIR/.bashrc $HOMEDIR/.bashrc
     ln -fs $CONFIGDIR/.ssh $HOMEDIR/.ssh
     ln -fs $CONFIGDIR/.emacs.d $HOMEDIR/.emacs
+
+    ln -fs $CONFIGDIR/prog/.zprezto/runcoms/zlogout $HOMEDIR/.zlogout
+    ln -fs $CONFIGDIR/prog/.zprezto/runcoms/zlogin $HOMEDIR/.zlogin
+    ln -fs $CONFIGDIR/prog/.zprezto/runcoms/zpreztorc $HOMEDIR/.zpreztorc
+    ln -fs $CONFIGDIR/prog/.zprezto/runcoms/zprofile $HOMEDIR/.zprofile
+    ln -fs $CONFIGDIR/prog/.zprezto/runcoms/zshrc $HOMEDIR/.zshrc        
 }
+
+function install_prezto {
+    cd ~/dotfiles/prog/
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git ".zprezto"
+    chsh -e /bin/zsh
+}
+
+function install_gnome_colors {
+    cd ~/dotfiles/prog/
+    sudo apt-get install dconf-cli
+    git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git gnome-colors
+    cd gnome-colors
+    ./install.sh
+}
+
+function install_inconsoltat {
+    sudo apt-get install fonts-inconsolata
+    }
 
 function install_eOS_addon {
     sudo apt-add-repository ppa:versable/elementary-update

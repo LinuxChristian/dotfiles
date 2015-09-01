@@ -1,5 +1,4 @@
 # dotfiles
 
-Nice programs
-Pentadactyl - firefox extension
-Inconsolata font
+Nice addons not possible to install with this script
+* Vimoperator - firefox extension
