@@ -189,7 +189,8 @@ bar {
      }
     # i3bar position
     position top
-    status_command /usr/local/conda/3.8.3/bin/py3status -c ~/.i3/i3status.conf -i ~/.i3/
+#    status_command /usr/local/conda/3.8.3/bin/py3status -c ~/.i3/i3status.conf -i ~/.i3/
+    status_command i3status
 }
 
 # Autostart programs
